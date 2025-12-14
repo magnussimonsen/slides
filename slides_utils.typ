@@ -1,5 +1,7 @@
-                      
-// Color definitions for headers
+// ============================================================================
+// Color Definitions
+// ============================================================================
+
 #let blue = rgb("#0000FF").darken(35%)   // Primary theme color. Also used for definitions
 #let red = rgb("#FF0000").darken(35%)    // Statments, theorems, important notes
 #let green = rgb("#00FF00").darken(35%)  // Examples, practical application
@@ -11,6 +13,10 @@
 
 // Global variable for lighter versions of colors for focus boxes
 #let percent_lighter = 90%
+
+// ============================================================================
+// Internal Helpers
+// ============================================================================
 
 // Creates a colored header box for slides
 #let slide-header(title, color, header-font-size) = context {
@@ -32,6 +38,10 @@
   )
 }
 
+// ============================================================================
+// Public Utilities
+// ============================================================================
+
 // Colored box for highlighting content (equations, code, notes)
 // Args: text-size (auto), bg (gray), center_x (false), center_y (false), width (auto)
 #let focusbox(
@@ -47,6 +57,7 @@
   let center_y_str = if center_y { horizon } else { top }
 
   // Get font size - use auto to fallback to state default
+  // Note: We access the state by string name to avoid circular imports with slides_core.typ
   let font-size = if text-size == auto {
     state("focusbox-font-size", 1em).get()
   } else {

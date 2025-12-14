@@ -1,57 +1,86 @@
 #import "slides_utils.typ": *
 
-// Default configuration constants
-// Comand line command to list fonts: typst fonts
-// Recomended dyslectic friendly fonts: OpenDyslexic, Comic Sans MS
+// ============================================================================
+// Defaults & Constants
+// ============================================================================
+
+// Fonts: Fallback lists ensure the template works across different OSs.
+// "Calibri" is standard on Windows, "Roboto" or "Liberation Sans" on Linux/Web.
+#let default-main-font = ("Calibri", "Roboto", "Liberation Sans", "Arial", "sans-serif")
+#let default-code-font = ("Consolas", "Roboto Mono", "Liberation Mono", "Courier New", "monospace")
+
+// Font Sizes
 #let default-header-font-size = 23pt
 #let default-content-font-size = 21pt
-#let default-main-font = "Calibri"
-#let default-code-font = "Consolas"
 #let default-focusbox-font-size = 1em
 #let default-table-font-size = 1em
-// State variables to pass configuration from slides() to slide() function
-// To list available system fonts, use the command: typst fonts
-#let header-font-size-state = state("header-font-size", default-header-font-size)
-#let main-font-state = state("main-font", default-main-font)
-#let code-font-state = state("code-font", default-code-font)
-#let equation-numbering-state = state("equation-numbering", "(1)")
-#let reset-equation-state = state("reset-equation", false)
-#let footer-text-state = state("footer-text", "")
-#let focusbox-font-size-state = state("focusbox-font-size", default-focusbox-font-size)
-#let table-font-size-state = state("table-font-size", default-table-font-size)
 
-// Main configuration function for presentations
+// Layout Constants
+// These control the spacing and geometry of the slides.
+#let layout-header-height-title = 1.6em
+#let layout-header-height-no-title = 1.5em
+#let layout-header-inset = 0.6cm
+#let layout-top-margin-extra = 0.5cm
+#let layout-top-margin-default = 1.75cm
+#let layout-margin-x = 1.6cm
+#let layout-margin-bottom = 1.2cm
+
+// ============================================================================
+// State Management
+// ============================================================================
+
+// We use state to pass configuration from the global `slides` show rule
+// down to individual `slide` calls.
+#let s-header-font-size = state("header-font-size", default-header-font-size)
+#let s-main-font = state("main-font", default-main-font)
+#let s-code-font = state("code-font", default-code-font)
+#let s-equation-numbering = state("equation-numbering", "(1)")
+#let s-reset-equation = state("reset-equation", false)
+#let s-footer-text = state("footer-text", "")
+#let s-focusbox-font-size = state("focusbox-font-size", default-focusbox-font-size)
+#let s-table-font-size = state("table-font-size", default-table-font-size)
+
+// ============================================================================
+// Main Configuration (Global)
+// ============================================================================
+
 #let slides(
   ratio: "16-9",
-  // The font family for the entire presentation. Can be controlled per slide too.
   main-font: default-main-font,
   code-font: default-code-font,
-  // The font sizes for all elements can be customized in each slide using em-units
-  font-size-headers: default-header-font-size, // Default header font size that also affects slide header height
-  font-size-content: default-content-font-size, // Default content font size. 
-  focusbox-font-size: default-focusbox-font-size, // Default focusbox font size
-  table-font-size: default-table-font-size, // Default table font size
-  footer_text: "", // Text to show in the footer. Empty by default.
-  reset_equation_numbers_per_slide: true, // Reset equation numbering on each slide
-  equation_numbering_globally: true, // Enable automatic equation numbering that starts on 1. Set to false to disable.
+  font-size-headers: default-header-font-size,
+  font-size-content: default-content-font-size,
+  focusbox-font-size: default-focusbox-font-size,
+  table-font-size: default-table-font-size,
+  footer_text: "",
+  reset_equation_numbers_per_slide: true,
+  equation_numbering_globally: true,
   body,
 ) = {
-  header-font-size-state.update(font-size-headers)
-  main-font-state.update(main-font)
-  code-font-state.update(code-font)
-  focusbox-font-size-state.update(focusbox-font-size)
-  table-font-size-state.update(table-font-size)
-  reset-equation-state.update(reset_equation_numbers_per_slide)
-  footer-text-state.update(footer_text)
+  // Update global state with user configuration
+  s-header-font-size.update(font-size-headers)
+  s-main-font.update(main-font)
+  s-code-font.update(code-font)
+  s-focusbox-font-size.update(focusbox-font-size)
+  s-table-font-size.update(table-font-size)
+  s-reset-equation.update(reset_equation_numbers_per_slide)
+  s-footer-text.update(footer_text)
+  
   let numbering_format = if equation_numbering_globally { "(1)" } else { none }
-  equation-numbering-state.update(numbering_format)
+  s-equation-numbering.update(numbering_format)
+
+  // Apply global document settings
   set text(font: main-font, size: font-size-content)
   set page(paper: "presentation-" + ratio, fill: white)
   set math.equation(numbering: numbering_format)
+  
   body
 }
 
-// Slide with colored header
+// ============================================================================
+// Slide Definition
+// ============================================================================
+
 #let slide(
   headercolor: blue,
   title: none,
@@ -61,34 +90,37 @@
   slide-main-font-size: none,
   slide-code-font: none,
   slide-code-font-size: none,
-  slide-equation-numbering: auto, // Set to true/false to override global equation numbering for this slide
+  slide-equation-numbering: auto,
   body,
 ) = context {
-  // Calculate dynamic top margin based on header size
-  let header-size = header-font-size-state.get()
-  let header-height = if title != none { 1.6em } else { 1.5em }
-  // Convert em to absolute units by measuring at the header font size
-  let header-height-absolute = measure(text(size: header-size)[#v(header-height)]).height
-  let top-margin = if title != none {
-    header-height-absolute + 0.5cm
+  // 1. Calculate Layout
+  let header-size = s-header-font-size.get()
+  let has-title = title != none
+  let header-em-height = if has-title { layout-header-height-title } else { layout-header-height-no-title }
+  
+  // Measure header height in absolute units to determine top margin
+  let header-height-absolute = measure(text(size: header-size)[#v(header-em-height)]).height
+  let top-margin = if has-title {
+    header-height-absolute + layout-top-margin-extra
   } else {
-    1.75cm
+    layout-top-margin-default
   }
   
+  // 2. Setup Page
   set page(
     fill: white,
-    header-ascent: if title != none { 65% } else { 66% },
-    header: [],
-    margin: (x: 1.6cm, top: top-margin, bottom: 1.2cm),
+    header-ascent: if has-title { 65% } else { 66% },
+    header: [], // We draw the header manually in the background to avoid margin issues
+    margin: (x: layout-margin-x, top: top-margin, bottom: layout-margin-bottom),
     background: context {
-      place(slide-header(title, headercolor, header-font-size-state.get()))
+      place(slide-header(title, headercolor, s-header-font-size.get()))
     },
     footer: context [
       #set text(size: 12pt, fill: gray)
       #grid(
         columns: (1fr, 1fr),
         align: (left + horizon, right + horizon),
-        footer-text-state.get(),
+        s-footer-text.get(),
         counter(page).display("1 / 1", both: true)
       )
     ],
@@ -96,19 +128,20 @@
 
   set par(justify: true)
 
-  // Apply slide-specific font settings
+  // 3. Apply Slide-Specific Styles
   context {
     let x_align = if center_x { center } else { left }
     let y_align = if center_y { horizon } else { top }
 
-    let font = if slide-main-font != none { slide-main-font } else { main-font-state.get() }
+    // Resolve fonts and sizes (fallback to global state if not overridden)
+    let font = if slide-main-font != none { slide-main-font } else { s-main-font.get() }
     let size = if slide-main-font-size != none { slide-main-font-size } else { text.size }
-    let code-font-val = if slide-code-font != none { slide-code-font } else { code-font-state.get() }
+    let code-font-val = if slide-code-font != none { slide-code-font } else { s-code-font.get() }
     let code-size = slide-code-font-size
     
-    // Determine equation numbering for this slide
+    // Resolve equation numbering
     let eq-numbering = if slide-equation-numbering == auto {
-      equation-numbering-state.get()
+      s-equation-numbering.get()
     } else if slide-equation-numbering {
       "(1)"
     } else {
@@ -118,14 +151,16 @@
     set text(font: font, size: size)
     set math.equation(numbering: eq-numbering)
     set align(x_align + y_align)
-    // Math equations always use Typst's default math font
+    
+    // Raw code blocks always use the code font
     show raw: set text(font: code-font-val, size: if code-size != none { code-size } else { size })
 
-    // Reset equation numbering for each slide
-    if reset-equation-state.get() == true {
+    // Reset equation counter if configured
+    if s-reset-equation.get() == true {
       counter(math.equation).update(0)
     }
 
+    // Small vertical correction to start content
     v(0cm)
     body
   }
