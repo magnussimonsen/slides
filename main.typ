@@ -3,7 +3,7 @@
 
 // Configure the presentation
 #show: slides.with(
-  ratio: "16-9", // Default is "16-9" if not set
+  ratio: "16-9", // Default is "16-9" if not set. The ratio "4-3" is also supported.
   main-font: "Calibri",  // Default value is "Calibri" if not set
   code-font: "Consolas", // Default value is "Consolas" if not set
   font-size-headers: 20pt, // 22pt is the default value if not set
