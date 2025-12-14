@@ -1,293 +1,317 @@
 #import "slides_core.typ": *
+#import "@preview/cetz:0.3.1"
 
 // Configure the presentation
 #show: slides.with(
-  ratio: "16-9",
-  main-font: default-main-font,
-  code-font: default-code-font,
-  font-size-headers: 23pt,
-  font-size-content: 20pt,
-  footer_text: "",
-  equation_numbering: true, // Enable automatic equation numbering that starts on 1
+  ratio: "16-9", // Default is "16-9" if not set
+  main-font: "Calibri",  // Default value is "Calibri" if not set
+  code-font: "Consolas", // Default value is "Consolas" if not set
+  font-size-headers: 20pt, // 22pt is the default value if not set
+  font-size-content: 19pt, // 20pt is the default value if not set
+  footer_text: "", // Text to show in the footer. Empty by default if not set.
+  equation_numbering_globally: true, // Default set to "false" if not set. 
 )
 
 // Blue header slide
 #slide(headercolor: blue, title: "Blue Header Slide")[
-  - This is a slide with a blue header
-  - Add your content here
-  - Simple and clean
-]
+  - Simple, clean and consistent design
+  - If `headercolor` is not set, it defaults to `blue`. (Colors can be tweaked in slides_utils.typ)
+  - Font family can be changed globally (not per slide) in the `slides` configuration
 
-// Red header slide
-#slide(headercolor: red, title: "Red Header Slide", slide-main-font: "Comic Sans MS", slide-main-font-size: 1.2em)[
-  - This is a slide with a red header
-  - You can add lists
-  - Or any other content
-
-]
-
-// Yellow header slide
-#slide(headercolor: yellow, title: "Yellow Header Slide")[
-  This slide has a yellow header.
-
-  You can use paragraphs and other formatting.
-]
-
-// Green header slide
-#slide(headercolor: green, title: "Green Header Slide")[
-  - Green is great for positive messages
-  - Environmental topics
-  - Success stories
-]
-
-// Slide without title (just colored bar)
-#slide(headercolor: purple)[
-  This slide has no title, just a purple colored bar at the top.
-
-  The content area is slightly larger.
-]
-
-// Slide with equations using focusbox boxes
-#slide(headercolor: gray, title: "Math Equations")[
-  Here's a highlighted equation:
-
-  #focusbox(bg: gray)[
-    $ E = m c^2 $
-  ]
-
-  Multiple aligned equations with one number:
-
-  #focusbox(text-size: 20pt)[
-    $
-      x & = (-b plus.minus sqrt(b^2 - 4a c)) / (2a) \
-      y & = a x^2 + b x + c
-    $
-  ]
-]
-
-// Slide with colored backgrounds
-#slide(headercolor: blue, title: "Colored Backgrounds")[
-  Colors are automatically lightened:
-
-  #focusbox(bg: blue)[
-    $ a^2 + b^2 = c^2 $
-  ]
-
-  #focusbox(bg: green)[
-    $ sum_(i=1)^n i = (n(n+1))/2 $
-  ]
-
-  #focusbox(bg: red, text-size: 18pt)[
-    Important: $ Delta = b^2 - 4a c $
-  ]
-]
-
-// More colored examples
-#slide(headercolor: yellow, title: "Different Color Options")[
-  #focusbox(bg: yellow, text-size: 0.9em)[
-    $ integral_0^infinity e^(-x^2) dif x = sqrt(pi)/2 $
-  ]
-
-  #focusbox(bg: purple)[
-    $ lim_(x arrow infinity) (1 + 1/x)^x = e $
-  ]
-
-  #focusbox(bg: gray)[
-    $ nabla times bold(E) = - (partial bold(B))/(partial t) $
-  ]
-]
-
-// Math theorem example with text and equations
-#slide(headercolor: red, title: "Pythagorean Theorem")[
-  One of the most fundamental theorems in mathematics:
-
-  #focusbox(bg: red, center_x: false, font: "Comic Sans MS")[
-    *Theorem (Pythagoras):* In a right triangle, the square of the hypotenuse equals the sum of the squares of the other two sides.
-
-    $ a^2 + b^2 = c^2 $
-
-    where $c$ is the length of the hypotenuse and $a, b$ are the lengths of the other two sides.
-  ]
-
-  This theorem has countless applications in geometry, physics, and engineering.
-]
-
-// Python code example
-#slide(headercolor: green, title: "Python Code Example")[
-  Example of a simple Python function:
-
-  #focusbox(bg: gray, center_x: false, font: code-font-state, text-size: 1em)[
-    ```python
-    def fibonacci(n):
-        """Calculate the nth Fibonacci number."""
-        if n <= 1:
-            return n
-        return fibonacci(n-1) + fibonacci(n-2)
-
-    # Test the function
-    for i in range(10):
-        print(f"F({i}) = {fibonacci(i)}")
+  #focusbox(bg: gray, center_x: false, text-size: 0.7em)[
+    ```typst
+    // Configure the presentation
+    #show: slides.with(
+      ratio: "16-9", // Default is "16-9" if not set
+      main-font: "Calibri",  // Default value is "Calibri" if not set
+      code-font: "Consolas", // Default value is "Consolas" if not set
+      font-size-headers: 20pt, // 22pt is the default value if not set
+      font-size-content: 19pt, // 20pt is the default value if not set
+      footer_text: "", // Text to show in the footer. Empty by default if not set.
+      equation_numbering_globally: true, // Default set to "false" if not set. 
+)
     ```
   ]
-
-  This recursive function calculates Fibonacci numbers.
+  *Note:* Example of a gray focusbox with smaller font size to show the global slides configuration. The lightening of the focusbox background color is controlled in `slides_utils.typ` with the variable 'percent_lighter'
 ]
+  
+#slide(headercolor: blue, title: "Including Images")[
+You can include images using the `#figure` command:
 
+```typst
+#figure(
+  image("Leonhard_Euler.jpg", width: 15%),
+  caption: [Leonhard Euler],
+) <img:LeonhardEuler>
+```
 
-#slide(headercolor: blue, title: "Electric Field Visualization")[
   #figure(
-    image("Electric-Field.jpg", width: 60%),
-    caption: [Electric field lines around charged particles],
-  ) <img:electric-field>
+    image("Leonhard_Euler.jpg", width: 15%),
+    caption: [Leonhard Euler],
+  ) <img:LeonhardEuler>
 
-  See @img:electric-field for the field visualization.
+  Arguably the GOAT of mathematics: @img:LeonhardEuler (referenced with Typst’s @ syntax).
 ]
 
-
-// Two-column layout example
-#slide(headercolor: purple, title: "Two Column Layout")[
-  #cols[
-    *Left Column*
-
-    - Point 1
-    - Point 2
-    - Point 3
-
-    You can put any content here.
-  ][
-    *Right Column*
-
-    #focusbox(bg: purple)[
-      $ E = m c^2 $
-    ]
-
-    More content on the right side.
-  ]
-]
-
-// Custom column widths example
-#slide(headercolor: green, title: "Custom Column Widths")[
-  #cols(columns: (2fr, 1fr))[
-    *Wide Column (2fr)*
-
-    #focusbox(bg: green, center_x: false)[
-      This column takes up twice the space of the narrow column.
-
-      $ integral_0^infinity e^(-x^2) dif x = sqrt(pi)/2 $
-    ]
-  ][
-    *Narrow (1fr)*
-
-    Smaller content.
-  ]
-]
-
-// Numbered equations example
-#slide(headercolor: red, title: "Numbered Equations")[
-  Einstein's famous mass-energy equation:
-
-  $ E = m c^2 $ <eq:einstein>
-
-  The quadratic formula:
-
-  $ x = (-b plus.minus sqrt(b^2 - 4a c)) / (2a) $ <eq:quadratic>
-
-  Pythagorean theorem:
-
-  $ a^2 + b^2 = c^2 $ <eq:pythagoras>
-
-  We can reference these equations: @eq:einstein, @eq:quadratic, and @eq:pythagoras.
-]
 
 // Mixed numbered and unnumbered equations
-#slide(headercolor: yellow, title: "Numbered vs Unnumbered")[
-  Some equations should be numbered:
+#slide(headercolor: gray, title: "Numbered vs unnumbered equations using '#set math.equation(numbering: none)' ")[
+  *Problem:* A ball is thrown upward with initial velocity $v_0 = 15 "m/s"$. Find the maximum height.
 
-  $ E = m c^2 $ <eq:energy>
+  Start with the kinematic equation:
 
-  But intermediate steps don't need numbers:
+  $ v^2 = v_0^2 - 2 g h $ <eq:kinematic>
+
+  At maximum height, the velocity is zero, so we set $v = 0$:
 
   #[
     #set math.equation(numbering: none)
-    $ F = m a $
-    $ p = m v $
+    $ 0 = v_0^2 - 2 g h $
+    $ h = v_0^2 / (2 g) $
   ]
 
-  Final result gets numbered:
+  Substitute $v_0 = 15 "m/s"$ and $g = 9.8 "m/s"^2$:
 
-  $ integral_0^infinity e^(-x^2) dif x = sqrt(pi)/2 $ <eq:gaussian>
+  $ h = (15^2) / (2 times 9.8) = 11.5 "m" $ <eq:result>
 
-  Only @eq:energy and @eq:gaussian are numbered.
+  Only @eq:kinematic and @eq:result are numbered.
 ]
 
-// Calculations in Typst
-#slide(headercolor: cyan, title: "Live Calculations")[
-  Typst can perform calculations directly in the document:
+// Red header slide with theorem
+#slide(headercolor: red, title: "Red header slide with theorem in focusbox")[
+  Here's Taylor's theorem using Typst math syntax (not LaTeX):
 
-  #focusbox(bg: cyan, center_x: false)[
-    *Basic arithmetic:*
-    - Addition: #(2 + 3) = 5
-    - Multiplication: #(7 * 8) = 56
-    - Division: #(100 / 4) = 25
+  #focusbox(bg: red, center_x: false)[
+    *Taylor's theorem:* Let $k >= 1$ be an integer and let the function $f : RR -> RR$ be $k$ times differentiable at the point $a in RR$. 
+    
+    Then there exists a function $h_k : RR -> RR$ such that
+    $ f(x) = sum_(i=0)^k (f^(i)(a))/(i!) (x - a)^i + h_k (x) (x - a)^k, $
+    
+    and $lim_(x -> a) h_k (x) = 0.$
   ]
 
-  *Using variables:*
-  #let mass = 10
-  #let acceleration = 9.8
-  #let force = mass * acceleration
+  Equation numbering is default set to false, but can be turned on by setting `equation_numbering_globally: true` in the `slides` configuration.
+]
 
-  - Mass = #mass kg
-  - Acceleration = #acceleration m/s²
-  - Force = #force N
+// Green header slide with Taylor series example
+#slide(headercolor: green, title: "Taylor Series Example", slide-equation-numbering: false)[
+  Green header slides are recommended for examples and practical applications.
+  #focusbox(bg: green, center_x: true, text-size: 1.1em, width: 90%)[
+    *Example:* Taylor series for $e^x$ around $a = 0$:
 
-  *Math functions:*
-  - Square root: $sqrt(15) = #(calc.sqrt(15))$
-  - Power: $2^8 = #(calc.pow(2, 8))$
-  - Sin(π/2) = #(calc.sin(calc.pi / 2))
-  - Log(100) = #(calc.log(100))
-  - Exponential: $e^3 = #(calc.exp(3))$
-  - Natural log: $ln(20) = #(calc.ln(20))$
-  - Factorial: $5! = #(calc.fact(5))$
+    
+    Since $f(x) = e^x$, all derivatives are $f^(n)(x) = e^x$, and $f^(n)(0) = 1$ for all $n$.
+    
+    Therefore, the Taylor series is:
+    $ e^x = sum_(n=0)^infinity (x^n)/(n!) = 1 + x + x^2/(2!) + x^3/(3!) + x^4/(4!) + dots.h.c $
+    
+    This series converges for all $x in RR$.
+  ]
 
+  *Note:* This is a green x-centered focusbox with 90% width, slightly bigger font size   and equation numbering is turned off for only this slide using `slide-equation-numbering: false`.
+]
+
+// Green header slide
+#slide(headercolor: green, title: [Python code for calculating $e^x$ using the Taylor series])[
+  Here’s a Python example that approximates $e^x$ using its Taylor series. *Note:* The code is shown in a white focusbox for readability and easy font-size control.
+  #focusbox(bg: white, center_x: false, width: 100% , text-size: 0.85em)[
+    ```python
+    import math
+    def exp_taylor(x, N=10):
+        """Approximate e^x using the Taylor series sum_{n=0}^N x^n/n!."""
+        total = 1.0  # n = 0 term
+        term = 1.0
+        for n in range(1, N + 1):
+            term = term * x / n
+            total = term + total
+        return total
+    x, N  = 1.0, 10
+    approx = exp_taylor(x, N)
+    print(f"N={N}: {approx}")
+    print("math.exp(1) =", math.exp(1.0))
+    ```
+  ]
+]
+
+
+#slide(headercolor: cyan, title: "Student Task (1:2 Columns)")[
+  Cyan header slides are recommended for explicit student tasks and exercises.
+  #cols(columns: (1fr, 2fr))[
+    *Task*
+    #focusbox(bg: cyan, center_x: false)[
+
+    Compute the integral:
+    $ integral x e^x dif x $
+    ]
+  ][
+    *Hint*
+
+      Use integration by parts:
+
+      $ integral u dif v = u v - integral v dif u $
+
+      choose $u = x$ and $v' = e^x$, then $u' = 1 $ and $v = e^x$.
+  ]
+]
+
+#slide(headercolor: yellow, title: "Centering Slide Content", center_x: true, center_y: false)[
+  By default, slides are:
+  - Left-aligned horizontally 
+  - Centered vertically
+
+  This slide *overrides both to center content horizontally and vertically*.
+
+  #focusbox(bg: gray, center_x: false, text-size: 0.85em)[
+    ```typst
+    #slide(headercolor: purple, title: "Centering Slide Content", center_x: true, center_y: false)[
+      
+    ]
+    ```
+  ]
+]
+
+
+// Calculations in Typst
+#slide(headercolor: blue, title: "Live Calculations")[
+  Typst can perform calculations directly in the document:
+
+  #cols[
+    *Output*
+
+    *Basic arithmetic:*
+    - Addition: #(2 + 3)
+    - Multiplication: #(7 * 8)
+    - Division: #(100 / 4)
+
+    *Using variables:*
+    #let mass = 10
+    #let acceleration = 9.8
+    #let force = mass * acceleration
+    - Mass = #mass kg
+    - Acceleration = #acceleration m/s²
+    - Force = #force N
+
+    *Math functions:*
+    - $sqrt(15) = #(calc.sqrt(15))$
+    - $2^8 = #(calc.pow(2, 8))$
+    - $sin(pi/2) = #(calc.sin(calc.pi / 2))$
+  ][
+    *Code*
+
+    #focusbox(bg: gray, center_x: false, text-size: 0.75em)[
+      ```typst
+      #(2 + 3)
+      #(7 * 8)
+      #(100 / 4)
+
+      #let mass = 10
+      #let acceleration = 9.8
+      #let force = mass * acceleration
+      #mass
+      #acceleration
+      #force
+
+      #(calc.sqrt(15))
+      #(calc.pow(2, 8))
+      #(calc.sin(calc.pi / 2))
+      ```
+    ]
+  ]
 ]
 
 // Programming: Series Generation (Python-style loops)
-#slide(headercolor: magenta, title: "Generating Series")[
-  Using traditional for loops (Python-style):
+#slide(headercolor: blue, title: "Generating Series using code directly in the document (Part 1)")[
+  #cols[
+    *Output*
 
-  *Squares of first 10 numbers:*
-  #{
-    let squares = ()
-    for i in range(1, 11) {
-      squares.push(i * i)
+    *Squares of first 10 numbers:*
+    #{
+      let squares = ()
+      for i in range(1, 11) {
+        squares.push(i * i)
+      }
+      squares.map(str).join(", ")
     }
-    squares.map(str).join(", ")
-  }
 
-  *Sum of first 100 natural numbers:*
-  #{
-    let _sum = 0
-    for i in range(1, 101) {
-      _sum += i
+    *Sum of first 100 natural numbers:*
+    #{
+      let _sum = 0
+      for i in range(1, 101) {
+        _sum += i
+      }
+      [$ sum_(i=1)^100 i = #_sum $]
     }
-    [$ sum_(i=1)^100 i = #_sum $]
-  }
+  ][
+    *Code*
 
-  *Fibonacci sequence (first 12 terms):*
-  #{
-    let fib = (0, 1)
-    for i in range(2, 12) {
-      fib.push(fib.at(-1) + fib.at(-2))
-    }
-    fib.map(str).join(", ")
-  }
+    #focusbox(bg: gray, center_x: false, text-size: 0.75em)[
+      ```typst
+      // Squares
+      #{
+        let squares = ()
+        for i in range(1, 11) {
+          squares.push(i * i)
+        }
+        squares.map(str).join(", ")
+      }
 
-  *Powers of 2:*
-  #{
-    let powers = ()
-    for i in range(0, 11) {
-      powers.push(calc.pow(2, i))
+      // Sum
+      #{
+        let _sum = 0
+        for i in range(1, 101) {
+          _sum += i
+        }
+        [$ sum_(i=1)^100 i = #_sum $]
+      }
+      ```
+    ]
+  ]
+]
+
+#slide(headercolor: blue, title: "Generating Series using code directly in the document (Part 2)")[
+  #cols[
+    *Output*
+
+    *Fibonacci sequence (first 12 terms):*
+    #{
+      let fib = (0, 1)
+      for i in range(2, 12) {
+        fib.push(fib.at(-1) + fib.at(-2))
+      }
+      fib.map(str).join(", ")
     }
-    powers.map(str).join(", ")
-  }
+
+    *Powers of 2:*
+    #{
+      let powers = ()
+      for i in range(0, 11) {
+        powers.push(calc.pow(2, i))
+      }
+      powers.map(str).join(", ")
+    }
+  ][
+    *Code*
+
+    #focusbox(bg: gray, center_x: false, text-size: 0.75em)[
+      ```typst
+      // Fibonacci
+      #{
+        let fib = (0, 1)
+        for i in range(2, 12) {
+          fib.push(fib.at(-1) + fib.at(-2))
+        }
+        fib.map(str).join(", ")
+      }
+
+      // Powers of 2
+      #{
+        let powers = ()
+        for i in range(0, 11) {
+          powers.push(calc.pow(2, i))
+        }
+        powers.map(str).join(", ")
+      }
+      ```
+    ]
+  ]
 ]

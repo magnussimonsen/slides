@@ -10,7 +10,7 @@
 #let white = rgb("FFFFFF")               // White color
 
 // Global variable for lighter versions of colors for focus boxes
-#let percent_lighter = 88%
+#let percent_lighter = 90%
 
 // Creates a colored header box for slides
 #let slide-header(title, color, header-font-size) = context {
@@ -33,33 +33,32 @@
 }
 
 // Colored box for highlighting content (equations, code, notes)
-// Args: text-size (1em), bg (gray), center_x (false), center_y (false), font (auto)
+// Args: text-size (auto), bg (gray), center_x (false), center_y (false), width (auto)
 #let focusbox(
-  text-size: 1em,
+  text-size: auto,
   bg: rgb("#F3F2F0"),
   center_x: false,
   center_y: false,
-  font: auto,
+  width: auto,
   content,
 ) = context {
   let bg-color = bg.lighten(percent_lighter)
   let center_x_str = if center_x { center } else { left }
   let center_y_str = if center_y { horizon } else { top }
 
-  // Get font - handle both string and state object
-  let font-family = if font == auto {
-    state("main-font", "Calibri").get()
-  } else if type(font) == type(state("", "")) {
-    font.get()
+  // Get font size - use auto to fallback to state default
+  let font-size = if text-size == auto {
+    state("focusbox-font-size", 1em).get()
   } else {
-    font
+    text-size
   }
 
   set align(center_x_str + center_y_str)
-  set text(font: font-family, size: text-size)
-  show raw: set text(font: font-family) // Apply font to code blocks too
+  set text(size: font-size)
+  show raw: set text(size: font-size)
   block(
     fill: bg-color,
+    width: width,
     inset: (x: .8cm, y: .8cm),
     breakable: false,
     above: .9cm,
