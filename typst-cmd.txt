@@ -1,1 +1,2 @@
+# Watch and continuously recompile the example deck:
 typst watch main.typ main.pdf
