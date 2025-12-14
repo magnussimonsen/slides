@@ -16,8 +16,8 @@
 //#let default-code-font = ("Liberation Mono", "Noto Mono", "Courier New")
 
 // Dyslexia-friendly alternative (uncomment to use)
-#let default-main-font = ("Comic Sans MS", "OpenDyslexic")
-#let default-code-font = ("Comic Sans MS", "OpenDyslexic")
+#let default-main-font = ("Comic Neue", "OpenDyslexic")
+#let default-code-font = ("Comic Neue", "OpenDyslexic")
 
 // Font Sizes
 #let default-header-font-size = 22pt
