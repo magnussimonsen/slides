@@ -26,7 +26,7 @@
 
   #v(1em)
 
-  #focusbox(bg: red, text-size: 0.8em)[
+  #focusbox(bg: red, text-size: 1.3em)[
     This is a *red focusbox* with a numbered equation and larger text.
 
     $ integral_0^infinity e^(-x^2) dif x = sqrt(pi)/2 $
@@ -87,7 +87,7 @@
       fill: (_, y) => if y == 0 { cyan.lighten(80%) },
       inset: (x, y) => if y == 0 { (x: 50pt, y: 5pt) } else { (x: 10pt, y: 10pt) },
       table.header(
-        [#align(center)[#v(5pt) #rotate(60deg, reflow: true)[*day*]]],
+        [#align(center)[#v(5pt) #rotate(60deg, reflow: true)[*Day*]]],
         [#align(center)[#v(5pt) #rotate(60deg, reflow: true)[*Susceptible S*]]],
         [#align(center)[#v(5pt) #rotate(60deg, reflow: true)[*Infectious I*]]],
         [#align(center)[#v(5pt) #rotate(60deg, reflow: true)[*Recovered R*]]],
