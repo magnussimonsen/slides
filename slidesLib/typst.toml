@@ -1,0 +1,16 @@
+[package]
+name = "slides"
+version = "0.1.0"
+entrypoint = "slides_lib.typ"
+authors = ["Magnus Simonsen"]
+license = "MIT"
+description = "A clean and simple slides template for Typst with built-in pause animations"
+homepage = "https://github.com/magnussimonsen/slides"
+repository = "https://github.com/magnussimonsen/slides"
+keywords = ["presentation", "slides", "template", "animation"]
+categories = ["presentation"]
+disciplines = ["education"]
+compiler = "0.12.0"
+
+[package.exclude]
+["*.pdf", "test_*.typ"]

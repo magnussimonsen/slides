@@ -9,7 +9,8 @@
   font-size-content: 16pt,
   footer_text: "Slides Demo",
   equation_numbering_globally: true,
-  percent_lighter: 90%,
+  percent_lighter: 90%, // Color lightness for focusboxes (default: 90%)
+  // The defult colors are: blue, red, green, cyan, magenta, yellow, gray, white, and can be used directly, and they can be customized in slides_utils.typ
 )
 
 // ============ SLIDE 1: Focus Boxes and Equations ============
@@ -39,7 +40,7 @@
     bg: magenta,
     width: 80%,
     text-size: 0.6em,
-    center_y: true,
+    center_y: false,
   )[
     The focusbox has several options:
 
@@ -49,16 +50,16 @@
     - center_y: Vertical centering (true/false)
     - width: Box width (e.g., 80%, 100%, auto)
   ]
- 
+ #align(top)[
  We can also use the `#pause` marker to create animated subslides within a slide.
-
+ ]
  #pause
 
   #focusbox(
     bg: cyan,
     width: 80%,
     text-size: 0.7em,
-    center_y: true,
+    center_y: false,
   )[
     The `#slide` function has these options:
 

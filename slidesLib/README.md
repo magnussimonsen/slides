@@ -2,6 +2,8 @@
 
 A clean and simple slides template for Typst with built-in pause animations.
 
+**Designed for Education**: This template is specifically designed for use in secondary education (high school and similar levels). It is intentionally kept simple and focused, providing just the essential features needed for effective classroom presentations.
+
 ## Features
 
 - ✨ **Simple & Clean Design** - Minimal, professional look
