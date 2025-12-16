@@ -5,10 +5,10 @@
   ratio: "16-9",
   main-font: "Calibri", // Default value is can be tweaked in slides_core.typ
   code-font: "Consolas", // Default value is can be tweaked in slides_core.typ
-  font-size-headers: 20pt,
-  font-size-content: 16pt,
-  footer_text: "Slides Demo",
-  equation_numbering_globally: true,
+  font-size-headers: 20pt, // Default value is can be tweaked in slides_core.typ
+  font-size-content: 16pt, // Default value is can be tweaked in slides_core.typ
+  footer_text: "Slides Demo", // Default value is emty string if not set
+  equation_numbering_globally: true, // Default set to "false" if not set.
   percent_lighter: 90%, // Color lightness for focusboxes (default: 90%)
   // The defult colors are: blue, red, green, cyan, magenta, yellow, gray, white, and can be used directly, and they can be customized in slides_utils.typ
 )
